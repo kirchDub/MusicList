@@ -22,8 +22,10 @@ npm install
 npm install package_name -D
 >>> installing package and adding to dependencies
 npm install package_name -S   ( -save for short )
+>>>globally
+npm install -g package_name
 
 
->>>>starting node in transpile mode
+>>>>starting node in interactive mode
 nodemon npm start
 
