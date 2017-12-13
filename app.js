@@ -6,15 +6,16 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 
 const index = require('./routes/index');
 const api = require('./routes/api/index');
+const users = require('./routes/api/users');
 
 const app = express();
 
 //Connct to mongoose
-mongoose.connect('mongodb://locahost/musiclist')
+mongoose.connect('mongodb://localhost/musiclist')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,12 +40,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', api);
+app.use('/api/users', users);
 
 //Configure passport
 const User = require('./models/user');
-passport.use(new localStrategy(User.authenticate));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+//passport.use(new LocalStrategy(User.authenticate()));
+//passport.serializeUser(User.serializeUser());
+//passport.deserializeUser(User.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use( (req, res, next) => {

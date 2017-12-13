@@ -1,0 +1,25 @@
+>>>starting mongodb
+mongod --dbpath c:\mongo\data\db
+
+>>> cloning 'develop' brach to 'musiclist' directory in local computer (need to be one directory above)
+git clone -b develop https://github.com/kirchDub/MusicList.git musiclist
+
+>>> adding new (or updated)  files to github
+git add -A
+git commit -m "message"
+git push 
+
+
+
+
+>>> installing everything from package.json
+npm install
+>>> installing package to dev dependencies 
+npm install package_name -D
+>>> installing package and adding to dependencies
+npm install package_name -S   ( -save for short )
+
+
+>>>>starting node in transpile mode
+nodemon npm start
+
