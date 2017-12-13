@@ -1,7 +1,11 @@
 >>>starting mongodb
 mongod --dbpath c:\mongo\data\db
+>>>mongo commands
+mongo
+show dbs
 
->>> cloning 'develop' brach to 'musiclist' directory in local computer (need to be one directory above)
+
+>>> cloning 'develop' branch to 'musiclist' directory in local computer (need to be one directory above)
 git clone -b develop https://github.com/kirchDub/MusicList.git musiclist
 
 >>> adding new (or updated)  files to github
