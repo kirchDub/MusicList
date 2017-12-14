@@ -9,6 +9,7 @@ show dbs
 git clone -b develop https://github.com/kirchDub/MusicList.git musiclist
 or 
 git clone https://github.com/kirchDub/reactToDo.git reactToDo
+git clone -b stable https://github.com/CloseBrace/MusicList.git test
 
 >>> updating current repo
 git pull
@@ -34,6 +35,8 @@ npm install package_name -S   ( -save for short )
 npm install -g package_name
 
 
->>>>starting node in interactive mode
+>>>>starting backend node in interactive mode
 nodemon npm start
+>>>>starting frontend
+npm run start-w
 

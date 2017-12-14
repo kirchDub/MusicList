@@ -1,15 +1,22 @@
 var webpack = require('webpack');
-var path = require('path');
+var { resolve } = require('path');
 module.exports = {
-    devtool: 'inline-source-map',
+    context: resolve(__dirname, 'src'),
     entry: [
-        'webpack-dev-server/client?http://127.0.0.1:8080/',
+        'react-hot-loader/patch',
+        'webpack-dev-server/client?http://127.0.0.1:8080',
         'webpack/hot/only-dev-server',
-        './src/index.jsx'
+        './index.jsx'
     ],
     output: {
-        path: path.join(__dirname, 'public', 'javascripts'),
-        filename: 'build.js'
+        filename: 'build.js',
+        path: resolve(__dirname, 'public', 'javascripts'),
+        publicPath: '/javascripts/',
+    },
+    devServer: {
+        hot: true,
+        contentBase: resolve(__dirname, ''),
+        publicPath: '/javascripts/',
     },
     resolve: {
         extensions: ['.js', '.jsx']

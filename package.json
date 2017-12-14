@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start-w": "webpack-dev-server",
+    "start-w": "webpack-dev-server --inline --hot",
     "test": "jest",
     "lint": "eslint .",
     "build-dev": "webpack -p"

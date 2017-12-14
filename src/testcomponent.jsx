@@ -6,6 +6,7 @@ export default function testComponent(props) {
         <div>
             <h1>{headline}</h1>
             {showCount ? <p>{count}</p> : null}
+            <h2>What1</h2>            
         </div>         
     );
 }
