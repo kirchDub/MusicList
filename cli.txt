@@ -6,6 +6,7 @@ mongod --dbpath /c/mongo/data/db
 >>>mongo commands
 mongo
 show dbs
+db.users.find().pretty()   // e.g for users colection
 
 
 >>> cloning 'develop' branch to 'musiclist' directory in local computer (need to be one directory above)
@@ -43,3 +44,12 @@ nodemon npm start
 >>>>starting frontend
 npm run start-w
 
+
+>>>>>postman input for authentication
+{
+    "username": "administrator",
+    "password": "longpassword",
+    "firstName": "Lez",
+    "lastName": "Laskowski",
+    "email": "lez@gmail.com"  
+}
