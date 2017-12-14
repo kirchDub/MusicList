@@ -1,5 +1,8 @@
 >>>starting mongodb
 mongod --dbpath c:\mongo\data\db
+or on linux
+mongod --dbpath /c/mongo/data/db
+
 >>>mongo commands
 mongo
 show dbs
