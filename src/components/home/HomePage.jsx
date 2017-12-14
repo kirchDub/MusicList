@@ -1,19 +1,25 @@
 import React from 'react';
+import { Button } from 'reactstrap'; 
+
+import Sidebar from '../shared/Sidebar';
+
+const alertme = () => {
+    alert('You clicked the button. Well done, Draco!');
+};
 
 export default function HomePage() {
   return (
-    <section className="page-content">
-        <div className="row">
-            <div className="col-sm-12 col-md-8">
-                <p>
-                This is the home page. ::::)
-                </p>
-                <aside className="col-sm-12 col-md-4">
-                This is the sidebar:
-                </aside>
-
-            </div>
+    <div className="row">
+        <div className="col-sm-12 col-md-8">
+            <p>
+            This is the home page.!!!
+            </p>
+            <p>
+                Here for your enjoyment is a button:
+            </p>
+            <Button onClick={alertme}>Click Me</Button>            
+            <Sidebar />
         </div>
-    </section>
+    </div>
   );
 }
