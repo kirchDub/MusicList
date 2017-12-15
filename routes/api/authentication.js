@@ -8,6 +8,20 @@ const router = express.Router();
 // configure mongoose promises
 mongoose.Promise = global.Promise;
 
+// GET to /checksession
+router.get('/checksession', (req, res) => {
+    if (req.user) {
+    return res.send(JSON.stringify(req.user));
+    }
+    return res.send(JSON.stringify({}));
+});
+
+//POST to /logout
+router.get('/logout', (req, res) => {
+    req.logout();
+    return res.send(JSON.stringify(req.user));
+});
+
 //POST to /register
 router.post('/register', (req, res) => {
     //Create a user object using values from incoming JSON
@@ -40,12 +54,6 @@ router.post('/login', async (req, res) => {
         //Otherwise, return an error
         return res.send(JSON.stringify({error: err}));
     });
-});
-
-//POST to /logout
-router.get('/logout', (req, res) => {
-    req.logout();
-    return res.send(JSON.stringify(req.user));
 });
 
 module.exports = router;

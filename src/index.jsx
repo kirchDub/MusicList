@@ -14,7 +14,7 @@ import configureStore from './store';
 
 import TemplateContainer from './components/TemplateContainer';
 
-const Store = configureStore(0);
+const Store = configureStore();
 
 const renderApp = (Component) => {
     render(
