@@ -1,11 +1,14 @@
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import { createLogger, logger } from 'redux-logger';
 
 import DevTools from '../components/shared/DevTools';
-import combinedReducers  from '../reducers/progress';
+import AuthenticationReducer from '../reducers/authentication'
+import ProgressReducer  from '../reducers/progress';
 
-
-const loggerMiddleware = createLogger();
+const combinedReducers = combineReducers({
+    progress: ProgressReducer,
+    authentication: AuthenticationReducer,
+});
 
 const enhancer = compose(
   applyMiddleware(logger),
