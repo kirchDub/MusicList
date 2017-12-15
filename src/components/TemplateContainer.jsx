@@ -18,7 +18,6 @@ class TemplateContainer extends React.Component {
     }
   
     async checkSession() {
-      console.log(this.props);
       const { sessionCheckFailureAction, sessionCheckSuccessAction } = this.props;
       // contact the API
       await fetch(
