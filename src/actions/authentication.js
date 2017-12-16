@@ -9,6 +9,38 @@ export const logoutSuccess = () => ({ type: 'AUTHENTICATION_LOGOUT_SUCCESS' });
 export const sessionCheckFailure = () => ({ type: 'AUTHENTICATION_SESSION_CHECK_FAILURE' });
 export const sessionCheckSuccess = json => ({ type: 'AUTHENTICATION_SESSION_CHECK_SUCCESS', json });
 
+
+//Check user session
+export function  checkSession() {
+    return async (dispatch) => {
+    // contact the API
+    await fetch(
+      // where to contact
+      '/api/authentication/checksession',
+      // what to send
+      {
+        method: 'GET',
+        credentials: 'same-origin',
+      },
+    )
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      }
+      return null;
+    })
+    .then((json) => {
+      if (json.username) {
+        return dispatch(sessionCheckSuccess(json));
+      } else {
+        return dispatch(sessionCheckFailure());
+      }
+    })
+    .catch(error => dispatch(sessionCheckFailure(error)));
+  };
+}
+
+
 export function  logUserOut() {
     return async (dispatch) => {
         // turn on spinner

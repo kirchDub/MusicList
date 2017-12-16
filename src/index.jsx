@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
-//import './css/musiclist.scss';  //need to check why is not working!!!
+import './css/musiclist.scss';  //need to check why is not working!!!
 
 import DevTools from './components/shared/DevTools';
 import configureStore from './store';
@@ -33,7 +33,7 @@ const renderApp = (Component) => {
 renderApp(TemplateContainer);
 
 if (module && module.hot) {
-    module.hot.accept('./components/TemplateContainer', () => {
-        renderApp(TemplateContainer);
-    })
+  module.hot.accept('./components/TemplateContainer', () => {
+    renderApp(TemplateContainer);
+  });
 }
