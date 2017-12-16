@@ -50,25 +50,33 @@ router.post('/login', async (req, res) => {
 });
 
 //POST to /register
-router.post('/register', (req, res) => {
-    //Create a user object using values from incoming JSON
-    const newUser = new User(req.body);
-    //Save, via Passport Register method, the user
-    User.register(newUser, req.body.password, (err) => {
-        // if there is a problem send back JSON with the error
-        if (err) {
-            return res.send(JSON.stringify({error: err}));
-        }
-        // Otherwise log them in
-        return passport.authenticate('local')(req, res, () => {
-            // If logged in, we should have user info to send back
-            if (req.user) {
-            return res.send(JSON.stringify(req.user));
+router.post('/register', async (req, res) => {
+    // First, check and make sure the email doesn't already exist
+    const query = User.findOne({ email: req.body.email });
+    const foundUser = await query.exec();
+
+    if (foundUser) { return res.send(JSON.stringify({ error: 'Email or username already exists' })); }
+    // Create a user object to save, using values from incoming JSON
+    if (!foundUser) {
+        //Create a user object using values from incoming JSON
+        const newUser = new User(req.body);
+        //Save, via Passport Register method, the user
+        User.register(newUser, req.body.password, (err) => {
+            // if there is a problem send back JSON with the error
+            if (err) {
+                return res.send(JSON.stringify({error: err}));
             }
-            // Otherwise return an error
-            return res.send(JSON.stringify({ error: 'There was an error logging in' }));
+            // Otherwise log them in
+            return passport.authenticate('local')(req, res, () => {
+                // If logged in, we should have user info to send back
+                if (req.user) {
+                return res.send(JSON.stringify(req.user));
+                }
+                // Otherwise return an error
+                return res.send(JSON.stringify({ error: 'There was an error registering the user' }));
+            });
         });
-    });
+    }
 });
 
 module.exports = router;
