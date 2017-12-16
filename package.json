@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "add": "^2.0.6",
+    "availity-reactstrap-validation": "^1.4.3",
     "babel-core": "^6.24.1",
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.0.0",
