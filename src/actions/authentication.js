@@ -12,7 +12,6 @@ export const registrationSuccessViewed = () => ({ type: 'AUTHENTICATION_REGISTRA
 export const sessionCheckFailure = () => ({ type: 'AUTHENTICATION_SESSION_CHECK_FAILURE' });
 export const sessionCheckSuccess = json => ({ type: 'AUTHENTICATION_SESSION_CHECK_SUCCESS', json });
 
-
 //Check user session
 export function  checkSession() {
     return async (dispatch) => {
@@ -43,6 +42,55 @@ export function  checkSession() {
   };
 }
 
+// Log User In
+export function logUserIn(userData) {
+    return async (dispatch) => {
+      // clear the error box if it's displayed
+      dispatch(clearError());
+  
+      // turn on spinner
+      dispatch(incrementProgress());
+  
+      // register that a login attempt is being made
+      dispatch(loginAttempt());
+  
+      // contact login API
+      await fetch(
+        // where to contact
+        '/api/authentication/login',
+        // what to send
+        {
+          method: 'POST',
+          body: JSON.stringify(userData),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'same-origin',
+        },
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        return null;
+      })
+      .then((json) => {
+        if (json) {
+          dispatch(loginSuccess(json));
+        } else {
+          dispatch(loginFailure(new Error('Email or Password Incorrect. Please Try again.')));
+        }
+      })
+      .catch((error) => {
+        dispatch(loginFailure(new Error(error)));
+      });
+  
+      // turn off spinner
+      return dispatch(decrementProgress());
+    };
+}
+
+//Log User Out
 export function  logUserOut() {
     return async (dispatch) => {
         // turn on spinner
@@ -61,11 +109,12 @@ export function  logUserOut() {
         .then((response) => {
             if (response.status === 200) {
                 dispatch(logoutSuccess());
+            } else {
+                dispatch(logoutFailure(new Error(response.status)));
             }
-            dispatch(logoutFailure(`Error: ${response.status}`));
         })
         .catch((error) => {
-            dispatch(logoutFailure(error));
+            dispatch(logoutFailure(new Error(error)));
         });
 
         // turn off spinner
@@ -104,7 +153,7 @@ export function registerUser(userData) {
         await dispatch(loginSuccess(json));
         await dispatch(registrationSuccess());
         } else {
-        dispatch(registrationFailure(new Error('Registration Failed')));
+        dispatch(registrationFailure(new Error('Registration Failed. Please try again')));
         }
     })
     .catch((error) => {

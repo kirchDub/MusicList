@@ -62,7 +62,7 @@ export class LoginPageContainer extends React.Component {
         loginSuccessAction(json);
         this.setState({ redirect: true });
         } else {
-        loginFailureAction(new Error('Authentication Failed'));
+        loginFailureAction(new Error('Email or Password Incorrect. Please Try again'));
         }
     })
     .catch((error) => {
