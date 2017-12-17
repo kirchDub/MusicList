@@ -65,7 +65,7 @@ router.post('/add', async (req, res) => {
   
 
 // configure Discogs
-const discogsClient = new Discogs('MusicList-kirchdub/0.1', {
+const discogsClient = new Discogs('MusicList-closebrace/0.1', {
   consumerKey: appConfig.discogs.key,
   consumerSecret: appConfig.discogs.secret,
 });
