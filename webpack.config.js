@@ -37,9 +37,17 @@ module.exports = {
         exclude: /(node_modules|bower_components|public\/)/,
         loader: 'babel-loader',
         query: {
-            presets: ["es2015", "react"],
+            presets: ["es2015", "es2017", "react"],
         }
       },
+      {
+        test: /\.js?$/,
+        exclude: /(node_modules|bower_components|public\/)/,
+        loader: 'babel-loader',
+        query: {
+            presets: ["es2015", "es2017", "react"],
+        }
+      },      
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
