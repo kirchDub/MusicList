@@ -7,7 +7,8 @@ const User = new Schema({
     password: String,
     firstName: String,
     lastName: String,
-    email: String,    
+    email: String,
+    passwordReset: { type: String, select: false },    
 });
 
 
