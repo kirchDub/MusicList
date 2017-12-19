@@ -26,10 +26,7 @@ const saveAlbum = async (albumInfo) => {
       const albumInfoModified = Object.assign({ discogsId: albumInfo.id }, albumInfo);
       const newAlbum = new Album(albumInfoModified);
       await newAlbum.save((error) => {
-        if (error) { errors = true; 
-          console.log(error);
-        }
-
+        if (error) { errors = true; }
       });
     }
     if (errors) {
@@ -77,6 +74,7 @@ router.post('/add', async (req, res) => {
       resolve(data);
     });
   });
+console.log(discogsGetMaster);
 
   // Get a single artist from Discogs
   const discogsGetArtist = artistId => new Promise((resolve) => {
@@ -106,10 +104,10 @@ router.post('/add', async (req, res) => {
 
     // Go through the album's artists and get their full info from Discogs
     
-    const artistsInfo = await getArtists(albumInfo.artists);
+    //const artistsInfo = await getArtists(albumInfo.artists);
     // Save the artists to the MusicList DB if they're not already there
-    const artistsSaved = await saveArtists(artistsInfo);
-    if (!artistsSaved) { return JSON.stringify(new Error('There was a problem saving the artist to the database.')); }
+    //const artistsSaved = await saveArtists(artistsInfo);
+    //if (!artistsSaved) { return JSON.stringify(new Error('There was a problem saving the artist to the database.')); }
     
     // Find the user we want to save to
     const query = User.findOne({ email: req.user.email });

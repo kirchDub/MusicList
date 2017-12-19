@@ -10,7 +10,7 @@ const User = new Schema({
     lastName: String,
     passwordReset: { type: String, select: false },
     username: String,   
-});
+},{ usePushEach: true });
 
 User.plugin(passportLocalMongoose);
 
