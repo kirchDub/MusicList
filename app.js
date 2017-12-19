@@ -33,12 +33,6 @@ const app = express();
 //Connct to mongoose
 mongoose.connect('mongodb://localhost/musiclist')
 
-//Checking mongodb version
-mongoose.connection.on('open', function() {
-  mongoose.connection.db.admin().serverStatus(function(error, info) {
-    console.log("Veersion" + info.version);
-  });
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

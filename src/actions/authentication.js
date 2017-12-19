@@ -211,7 +211,6 @@ export function registerUser(userData) {
         }
     })
     .catch((error) => {
-        console.log(error)
         dispatch(registrationFailure(new Error(json.error.message || 'Email or username already exists')));
     });
 

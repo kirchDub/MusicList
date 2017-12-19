@@ -87,8 +87,6 @@ export default class AlbumsPage extends React.Component {
   addAlbum(e) {
     const { addAlbumFunction } = this.props;
     // get id from button and send to the API
-    console.log(this.props);
-    console.log(e.target.id);
     addAlbumFunction(e.target.id);
   }
 

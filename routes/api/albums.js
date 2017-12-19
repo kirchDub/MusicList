@@ -27,7 +27,6 @@ const saveAlbum = async (albumInfo) => {
       const newAlbum = new Album(albumInfoModified);
       await newAlbum.save((error) => {
         if (error) { errors = true; 
-          console.log(error);
         }
 
       });
@@ -100,6 +99,7 @@ router.post('/add', async (req, res) => {
   try {
     // Get album info from discogs AI
     const albumInfo = await discogsGetMaster(albumId);
+    console.log(albumInfo);
     // Save it to the MusicList DB if it's not already there
     const albumSaved = await saveAlbum(albumInfo);
     if (!albumSaved) { return JSON.stringify(new Error('There was a problem saving the album to the database.')); }
@@ -131,19 +131,29 @@ router.post('/add', async (req, res) => {
 
     foundUser.save((error) => {
       if (error) {
-        console.log(error);
         result = res.json({ error: 'Album could not be saved. Please try again.' });
       } else {
         result = res.json(foundUser);
       }
     });
   } catch (err) {
-    console.log(error);
     result = res.json({ error: 'There was an error saving the album to the database. Please try again.' });
   }
-
   return result;
-  
+   
+});
+
+// POST to /populate
+router.post('/populate', (req, res, next) => {
+  // Get album data from an array
+  Album.find({
+    discogsId: { $in: req.body },
+  }, (err, albums) => {
+    if (err) {
+      return res.json({ error: err.message });
+    }
+    return res.json(albums);
+  }); 
 });
 
 // POST to /search
