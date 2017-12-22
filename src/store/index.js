@@ -2,6 +2,9 @@ import thunkMiddleware from 'redux-thunk';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 
+import log from '../middleware/log';
+import api from '../middleware/api';
+
 import combinedReducers from '../reducers';
 import DevTools from '../components/shared/DevTools';
 
@@ -11,6 +14,8 @@ const enhancer = compose(
   applyMiddleware(
     thunkMiddleware,
     loggerMiddleware,
+    api,
+    log
   ),
   DevTools.instrument(),
 );
@@ -24,6 +29,6 @@ export default function configureStore(initialState) {
       store.replaceReducer(combinedReducers),
     );
   }
-
+  window.store = store;
   return store;
 }

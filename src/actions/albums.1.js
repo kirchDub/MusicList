@@ -15,21 +15,6 @@ export const albumSearchSuccess = json => ({ type: 'MUSIC_ALBUM_SEARCH_SUCCESS',
 export const albumsPopulateFailure = error => ({ type: 'MUSIC_ALBUMS_POPULATE_FAILURE', error });
 export const albumsPopulateSuccess = json => ({ type: 'MUSIC_ALBUMS_POPULATE_SUCCESS', json });
 
-//experyment with generic api as middleware - for now only for insted of action at at bottom
-export const searchAlbums = (searchText) => ({
-  type: 'API',
-  payload: {
-    url: '/api/albums/search',
-    txt: searchText,
-    success: albumSearchSuccess,
-    failure: albumSearchFailure,
-  },
-  meta: {
-    throttle: 2000
-  }
-});
-
-
 // Add an Album
 export function addAlbum(id) {
   return async (dispatch) => {
@@ -209,7 +194,7 @@ export function populateAlbums(albums) {
 }
 
 // Search Albums
-export function searchAlbums2(searchText) {
+export function searchAlbums(searchText) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());
