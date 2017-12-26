@@ -7,8 +7,21 @@ export const userClearList = () => ({ type: 'USER_CLEAR_LIST' });
 export const userLookupFailure = error => ({ type: 'USER_LOOKUP_FAILURE', error });
 export const userLookupSuccess = json => ({ type: 'USER_LOOKUP_SUCCESS', json });
 
+
+
 // Look up a user
-export function userLookup(username) {
+export const addAlbum = (username) => ({
+  type: 'API',
+  json: {
+    url: '/api/users/find',
+    searchQuery: {username},
+    success: userLookupSuccess,
+    failure: userLookupFailure,
+  }
+});
+
+// Look up a user
+export function userLookup2(username) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());

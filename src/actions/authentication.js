@@ -20,7 +20,80 @@ export const sessionCheckFailure = () => ({ type: 'AUTHENTICATION_SESSION_CHECK_
 export const sessionCheckSuccess = json => ({ type: 'AUTHENTICATION_SESSION_CHECK_SUCCESS', json });
 
 //Check user session
-export function  checkSession() {
+export const checkSession = (username) => ({
+  type: 'API',
+  json: {
+    url: '/api/authentication/checksession',
+    searchQuery: {username},
+    success: sessionCheckSuccess,
+    failure: sessionCheckFailure,
+    err: '',
+  }
+});
+
+//Send email to API for hashing
+export const createHash = (email) => ({
+  type: 'API',
+  json: {
+    url: '/api/authentication/saveresethash',
+    searchQuery: {email},
+    success: passwordResetHashCreated,
+    failure: passwordResetHashFailure,
+    err: 'Something went wrong. Please try again.',
+  }
+});
+
+// Log User In
+export const logUserIn = (userData) => ({
+  type: 'API',
+  json: {
+    url: '/api/authentication/login',
+    searchQuery: {userData},
+    success: loginSuccess,
+    failure: loginFailure,
+    err: 'Email or Password Incorrect. Please Try again.',    
+  }
+});
+
+// Log User Out
+export const logUserOut = () => ({
+  type: 'API',
+  json: {
+    url: '/api/authentication/logout',
+    searchQuery: {},
+    success: logoutSuccess,
+    failure: logoutFailure,
+    err: '',    
+  }
+});
+
+// Register User
+export const registerUser = (userData) => ({
+  type: 'API',
+  json: {
+    url: '/api/authentication/register',
+    searchQuery: {userData},
+    success: [loginSuccess, registrationSuccess],
+    failure: registrationFailure,
+    err: 'Email or username already exists',
+  }
+});
+
+// Save a user's password
+export const savePassword = (data) => ({
+  type: 'API',
+  json: {
+    url: '/api/authentication/savepassword',
+    searchQuery: {data},
+    success: passwordSaveSuccess,
+    failure: passwordSaveFailure,
+    err: 'There was an error saving the password. Please try again.',
+  }
+});
+
+
+//Check user session
+export function  checkSession2() {
     return async (dispatch) => {
     // contact the API
     await fetch(
@@ -50,7 +123,7 @@ export function  checkSession() {
 }
 
 // Send email to API for hashing
-export function createHash(email) {
+export function createHash2(email) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());
@@ -92,7 +165,7 @@ export function createHash(email) {
 }
 
 // Log User In
-export function logUserIn(userData) {
+export function logUserIn2(userData) {
     return async (dispatch) => {
       // clear the error box if it's displayed
       dispatch(clearError());
@@ -140,7 +213,7 @@ export function logUserIn(userData) {
 }
 
 //Log User Out
-export function  logUserOut() {
+export function  logUserOut2() {
     return async (dispatch) => {
         // clear the error box if it's displayed
         dispatch(clearError());
@@ -175,7 +248,7 @@ export function  logUserOut() {
 }
 
 // Register a User
-export function registerUser(userData) {
+export function registerUser2(userData) {
     return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());
@@ -219,7 +292,7 @@ export function registerUser(userData) {
     };
 }
 // Save a user's password
-export function savePassword(data) {
+export function savePassword2(data) {
     return async (dispatch) => {
       // clear the error box if it's displayed
       dispatch(clearError());
