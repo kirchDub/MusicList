@@ -18,20 +18,70 @@ export const albumsPopulateSuccess = json => ({ type: 'MUSIC_ALBUMS_POPULATE_SUC
 //experyment with generic api as middleware - for now only for insted of action at at bottom
 export const searchAlbums = (searchText) => ({
   type: 'API',
-  payload: {
+  json: {
     url: '/api/albums/search',
-    txt: searchText,
+    searchQuery: {q: searchText, type: 'master', format: 'album'},
     success: albumSearchSuccess,
     failure: albumSearchFailure,
-  },
-  meta: {
-    throttle: 2000
+  }
+});
+
+// Add an Album
+export const addAlbum = (id) => ({
+  type: 'API',
+  json: {
+    url: '/api/albums/add',
+    searchQuery: {id},
+    success: albumAddSuccess,
+    failure: albumAddFailure,
+  }
+});
+
+// Delete an album from user's list
+export const deleteAlbum = (albumId) => ({
+  type: 'API',
+  json: {
+    url: '/api/albums/delete',
+    searchQuery: {albumId},
+    success: albumDeleteSuccess,
+    failure: albumDeleteFailure,
+  }
+});
+
+// Get the latest album from the Discogs API
+export const getLatestAlbum = () => ({
+  type: 'API',
+  json: {
+    url: '/api/albums/search',
+    searchQuery: {q: '', type: 'master', format: 'album', sort_order: 'asc'},
+    success: albumLatestSuccess,
+    failure: albumLatestFailure,
+  }
+});
+
+// Populate Album data
+export const populateAlbums = (albums) => ({
+  type: 'API',
+  json: {
+    url: '/api/albums/populate',
+    searchQuery: {albums},
+    success: albumsPopulateSuccess,
+    failure: albumsPopulateFailure,
   }
 });
 
 
-// Add an Album
-export function addAlbum(id) {
+
+
+
+
+
+
+
+
+
+
+export function addAlbum2(id) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());
@@ -74,7 +124,7 @@ export function addAlbum(id) {
 
 
 // Delete an album from user's list
-export function deleteAlbum(albumId) {
+export function deleteAlbum2(albumId) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());
@@ -121,7 +171,7 @@ export function deleteAlbum(albumId) {
 
 
  // Get the latest album from the Discogs API
- export function getLatestAlbum() {
+ export function getLatestAlbum2() {
   return async (dispatch) => {
     // turn on spinner
     dispatch(incrementProgress());
@@ -169,7 +219,7 @@ export function deleteAlbum(albumId) {
    
 
 // Populate Album data
-export function populateAlbums(albums) {
+export function populateAlbums2(albums) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());

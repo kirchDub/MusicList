@@ -9,19 +9,12 @@ const api = ({ dispatch, getState }) => next => action => {
     return next(action);
   }
 
-      const { url, txt, success, failure} = action.payload;
+      const { url, searchQuery, success, failure} = action.json;
       // clear the error box if it's displayed
       dispatch(clearError());
   
       // turn on spinner
       dispatch(incrementProgress());
-
-      // Build packet to send to Discogs API
-      const searchQuery = {
-        q: txt,
-        type: 'master',
-        format: 'album',
-      };
   
       // Send packet to our API, which will communicate with Discogs
       fetch(
