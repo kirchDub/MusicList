@@ -15,17 +15,6 @@ export const albumSearchSuccess = json => ({ type: 'MUSIC_ALBUM_SEARCH_SUCCESS',
 export const albumsPopulateFailure = error => ({ type: 'MUSIC_ALBUMS_POPULATE_FAILURE', error });
 export const albumsPopulateSuccess = json => ({ type: 'MUSIC_ALBUMS_POPULATE_SUCCESS', json });
 
-//experyment with generic api as middleware - for now only for insted of action at at bottom
-export const searchAlbums = (searchText) => ({
-  type: 'API',
-  json: {
-    url: '/api/albums/search',
-    searchQuery: {q: searchText, type: 'master', format: 'album'},
-    success: albumSearchSuccess,
-    failure: albumSearchFailure,
-  }
-});
-
 // Add an Album
 export const addAlbum = (id) => ({
   type: 'API',
@@ -34,6 +23,8 @@ export const addAlbum = (id) => ({
     searchQuery: {id},
     success: albumAddSuccess,
     failure: albumAddFailure,
+    successJson: 'json.email',
+    err: '',
   }
 });
 
@@ -45,6 +36,8 @@ export const deleteAlbum = (albumId) => ({
     searchQuery: {albumId},
     success: albumDeleteSuccess,
     failure: albumDeleteFailure,
+    successJson: 'json.email',
+    err: '',
   }
 });
 
@@ -56,6 +49,8 @@ export const getLatestAlbum = () => ({
     searchQuery: {q: '', type: 'master', format: 'album', sort_order: 'asc'},
     success: albumLatestSuccess,
     failure: albumLatestFailure,
+    successJson: 'json.results',
+    err: '',
   }
 });
 
@@ -67,6 +62,21 @@ export const populateAlbums = (albums) => ({
     searchQuery: {albums},
     success: albumsPopulateSuccess,
     failure: albumsPopulateFailure,
+    successJson: 'json.error',
+    err: '',
+  }
+});
+
+//search album
+export const searchAlbums = (searchText) => ({
+  type: 'API',
+  json: {
+    url: '/api/albums/search',
+    searchQuery: {q: searchText, type: 'master', format: 'album'},
+    success: albumSearchSuccess,
+    failure: albumSearchFailure,
+    successJson: 'json.results',
+    err: '',
   }
 });
 

@@ -3,24 +3,27 @@ import { decrementProgress, incrementProgress } from '../actions/progress';
 import { clearError } from '../actions/error';
 
 
-const api = ({ dispatch, getState }) => next => action => {
+const api =  ({ dispatch, getState }) => next => async action => {
 
   if (action.type !== "API") {
     return next(action);
   }
 
-      const { url, searchQuery, success, failure} = action.json;
+      const { method, url, searchQuery, success, successJson, failure, err} = action.json;
       // clear the error box if it's displayed
       dispatch(clearError());
   
       // turn on spinner
       dispatch(incrementProgress());
+
   
-      // Send packet to our API, which will communicate with Discogs
-      fetch(
+      // call POST or GET
+
+      if (method==="POST")
+      await fetch(
         url,
         {
-          method: 'POST',
+          method,
           body: JSON.stringify(searchQuery),
           headers: {
             'Content-Type': 'application/json',
@@ -31,17 +34,45 @@ const api = ({ dispatch, getState }) => next => action => {
       .then((response) => {
         if (response.status === 200) {
           return response.json();
+        } else {
+          return null;          
         }
-        return null;
       })
       .then((json) => {
-        if (json.results) {    
+        console.log('successJson');
+        console.log(successJson);
+        if ( eval(successJson) ) {
           return dispatch(success(json));
         }
-        return dispatch(failure(new Error(json.error)));
+        return dispatch(failure(new Error(err)));
       })
       .catch(error => dispatch(failure(new Error(error))));
-  
+      else if (method==="GET")
+      await fetch(
+        url,
+        {
+          method,
+          credentials: 'same-origin',
+        },
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          console.log('failJson');
+          return null;          
+        }
+      })
+      .then((json) => {
+        console.log('successJson');
+        console.log(successJson);
+        if ( eval(successJson) ) {
+          return dispatch(success(json));
+        }
+        return dispatch(failure(new Error(err)));
+      })      
+      .catch(error => dispatch(failure(new Error(error))));      
+
       // turn off spinner
       dispatch(decrementProgress());
     };

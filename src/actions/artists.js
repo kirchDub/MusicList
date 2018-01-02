@@ -13,8 +13,58 @@ export const artistSearchSuccess = json => ({ type: 'MUSIC_ARTIST_SEARCH_SUCCESS
 export const artistsPopulateFailure = error => ({ type: 'MUSIC_ARTISTS_POPULATE_FAILURE', error });
 export const artistsPopulateSuccess = json => ({ type: 'MUSIC_ARTISTS_POPULATE_SUCCESS', json });
 
+
 // Add an Artist
-export function addArtist(id) {
+export const addAlbum = (id) => ({
+  type: 'API',
+  json: {
+    url: '/api/artists/add',
+    searchQuery: {id},
+    success: artistAddSuccess,
+    failure: artistAddFailure,
+    err: '',
+  }
+});
+
+// Delete an artist from user's list
+export const deleteArtist = (artistId) => ({
+  type: 'API',
+  json: {
+    url: '/api/artist/delete',
+    searchQuery: {artistId},
+    success: artistDeleteSuccess,
+    failure: artistDeleteFailure,
+    err: '',
+  }
+});
+
+// Populate Artist data
+export const populateArtists = (artists) => ({
+  type: 'API',
+  json: {
+    url: '/api/artists/populate',
+    searchQuery: {artists},
+    success: artistsPopulateSuccess,
+    failure: artistsPopulateFailure,
+    err: '',
+  }
+});
+
+export const searchArtists = (searchText) => ({
+  type: 'API',
+  json: {
+    url: '/api/artists/search',
+    searchQuery: {searchText},
+    success: artistSearchSuccess,
+    failure: artistSearchFailure,
+    err: '',
+  }
+});
+
+
+
+// Add an Artist
+export function addArtist2(id) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());
@@ -56,7 +106,7 @@ export function addArtist(id) {
 }
 
 // Delete an artist from user's list
-export function deleteArtist(artistId) {
+export function deleteArtist2(artistId) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());
@@ -103,7 +153,7 @@ export function deleteArtist(artistId) {
   
 
 // Populate Artist data
-export function populateArtists(artists) {
+export function populateArtists2(artists) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());
@@ -145,7 +195,7 @@ export function populateArtists(artists) {
   
 
 // Search Artists
-export function searchArtists(searchText) {
+export function searchArtists2(searchText) {
   return async (dispatch) => {
     // clear the error box if it's displayed
     dispatch(clearError());

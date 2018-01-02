@@ -20,13 +20,15 @@ export const sessionCheckFailure = () => ({ type: 'AUTHENTICATION_SESSION_CHECK_
 export const sessionCheckSuccess = json => ({ type: 'AUTHENTICATION_SESSION_CHECK_SUCCESS', json });
 
 //Check user session
-export const checkSession = (username) => ({
+export const checkSession = () => ({
   type: 'API',
   json: {
+    method: 'GET',
     url: '/api/authentication/checksession',
-    searchQuery: {username},
+    searchQuery: {},
     success: sessionCheckSuccess,
     failure: sessionCheckFailure,
+    successJson: 'json.username',
     err: '',
   }
 });
@@ -35,8 +37,9 @@ export const checkSession = (username) => ({
 export const createHash = (email) => ({
   type: 'API',
   json: {
+    method: 'POST',
     url: '/api/authentication/saveresethash',
-    searchQuery: {email},
+    searchQuery: email,
     success: passwordResetHashCreated,
     failure: passwordResetHashFailure,
     err: 'Something went wrong. Please try again.',
@@ -47,8 +50,9 @@ export const createHash = (email) => ({
 export const logUserIn = (userData) => ({
   type: 'API',
   json: {
+    method: 'POST',
     url: '/api/authentication/login',
-    searchQuery: {userData},
+    searchQuery: userData,
     success: loginSuccess,
     failure: loginFailure,
     err: 'Email or Password Incorrect. Please Try again.',    
@@ -59,11 +63,12 @@ export const logUserIn = (userData) => ({
 export const logUserOut = () => ({
   type: 'API',
   json: {
+    method: 'GET',
     url: '/api/authentication/logout',
     searchQuery: {},
     success: logoutSuccess,
     failure: logoutFailure,
-    err: '',    
+    err: 'Something Wrong!!!!',    
   }
 });
 
@@ -71,8 +76,9 @@ export const logUserOut = () => ({
 export const registerUser = (userData) => ({
   type: 'API',
   json: {
+    method: 'POST',
     url: '/api/authentication/register',
-    searchQuery: {userData},
+    searchQuery: userData,
     success: [loginSuccess, registrationSuccess],
     failure: registrationFailure,
     err: 'Email or username already exists',
@@ -83,13 +89,18 @@ export const registerUser = (userData) => ({
 export const savePassword = (data) => ({
   type: 'API',
   json: {
+    method: 'POST',
     url: '/api/authentication/savepassword',
-    searchQuery: {data},
+    searchQuery: data,
     success: passwordSaveSuccess,
     failure: passwordSaveFailure,
     err: 'There was an error saving the password. Please try again.',
   }
 });
+
+
+
+
 
 
 //Check user session
@@ -233,11 +244,18 @@ export function  logUserOut2() {
         )
         .then((response) => {
             if (response.status === 200) {
-                dispatch(logoutSuccess());
+              return response.json();
             } else {
                 dispatch(logoutFailure(new Error(response.status)));
             }
         })
+        .then((json) => {
+          if (json) {
+            dispatch(logoutSuccess(json));
+          } else {
+            dispatch(logoutFailure(new Error('Email or Password Incorrect. Please Try again.')));
+          }
+        })        
         .catch((error) => {
             dispatch(logoutFailure(new Error(error)));
         });

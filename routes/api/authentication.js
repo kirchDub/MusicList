@@ -25,7 +25,8 @@ router.get('/checksession', (req, res) => {
 //POST to /logout
 router.get('/logout', (req, res) => {
     req.logout();
-    return res.send(JSON.stringify(req.user));
+    //return res.send(JSON.stringify(req.user));
+    return res.send({user: 'test'});  //sending something to create the same API signature
 });
 
 //POST to /login

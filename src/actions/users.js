@@ -10,7 +10,7 @@ export const userLookupSuccess = json => ({ type: 'USER_LOOKUP_SUCCESS', json })
 
 
 // Look up a user
-export const addAlbum = (username) => ({
+export const userLookup = (username) => ({
   type: 'API',
   json: {
     url: '/api/users/find',
